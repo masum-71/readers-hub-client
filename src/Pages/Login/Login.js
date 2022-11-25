@@ -1,18 +1,45 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../Contexts/AuthProvider/AuthProvider";
 
 const Login = () => {
+  const { loginUser, googleLogin } = useContext(AuthContext);
+  const navigate = useNavigate();
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
+
+  const handleLogin = (data) => {
+    loginUser(data.email, data.password)
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+        navigate("/");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleGoogleLogin = () => {
+    googleLogin()
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+        navigate("/");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <div className=" flex justify-center items-center">
       <div className="w-96 border-4 my-12 p-4 bg-slate-100">
         <h1 className="text-2xl text-center">Login</h1>
-        <form onSubmit={handleSubmit()}>
+        <form onSubmit={handleSubmit(handleLogin)}>
           <div className="form-control w-full ">
             <label className="label">
               <span className="label-text text-xl">Email</span>
@@ -66,7 +93,12 @@ const Login = () => {
           </Link>
         </p>
         <div className="divider">OR</div>
-        <button className="btn btn-outline w-full">CONTINUE WITH GOOGLE</button>
+        <button
+          onClick={handleGoogleLogin}
+          className="btn text-white btn-outline w-full bg-pink-600"
+        >
+          CONTINUE WITH GOOGLE
+        </button>
       </div>
     </div>
   );

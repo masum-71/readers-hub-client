@@ -5,7 +5,7 @@ import logo from "../../Assets/logo/logo.png";
 import { AuthContext } from "../../Contexts/AuthProvider/AuthProvider";
 
 const Navbar = () => {
-  const user = useContext(AuthContext);
+  const { user, logOut } = useContext(AuthContext);
   const menuItem = (
     <>
       <li className="font-semibold mr-2">
@@ -18,6 +18,11 @@ const Navbar = () => {
     </>
   );
 
+  const userLogOut = () => {
+    logOut()
+      .then(() => {})
+      .catch(() => {});
+  };
   return (
     <div className="navbar h-14 bg-blue-50 mb-10">
       <div className="navbar-start">
@@ -55,21 +60,22 @@ const Navbar = () => {
       <div className="navbar-end ">
         <div className="font-semibold">
           {user?.email ? (
-            <div className="flex">
+            <div className="flex items-center">
               <li className="list-none mr-2">
-                <Link to="/myreviews">My reviews</Link>
+                <Link to="/dashboard">Dashboard</Link>
               </li>
               <li className="list-none mr-2">
-                <Link to="/login">Add Services</Link>
-              </li>
-              <li className="list-none mr-2">
-                <button>Log Out</button>
+                <button onClick={userLogOut} className="btn btn-sm bg-pink-600">
+                  Log Out
+                </button>
               </li>
             </div>
           ) : (
             <>
               <li className="list-none mr-2">
-                <Link to="/login">Login</Link>
+                <Link className="btn btn-sm bg-pink-600" to="/login">
+                  Login
+                </Link>
               </li>
             </>
           )}

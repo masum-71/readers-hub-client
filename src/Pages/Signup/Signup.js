@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../Contexts/AuthProvider/AuthProvider";
 
 const Signup = () => {
   const {
@@ -8,11 +9,49 @@ const Signup = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  const navigate = useNavigate();
+
+  const { createUser, googleLogin } = useContext(AuthContext);
+
+  const handleSignup = (data) => {
+    createUser(data.email, data.password)
+      .then((result) => {
+        saveUser(data.name, data.email, data.userRole);
+        navigate("/");
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const handleGoogleLogin = () => {
+    googleLogin()
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+        saveUser(user.displayName, user.email);
+        navigate("/");
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const saveUser = (name, email, userRole = "buyer") => {
+    const user = { name, email, userRole };
+    fetch(`http://localhost:5000/users`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+      .then((res) => res.json())
+      .then((data) => {});
+  };
+
   return (
-    <div className="flex h-screen justify-center items-center">
+    <div className="flex  justify-center items-center">
       <div className="w-96 border-4 bg-slate-100 p-6">
         <p className="text-2xl text-center">Sign Up</p>
-        <form onSubmit={handleSubmit()}>
+        <form onSubmit={handleSubmit(handleSignup)}>
           <div className="form-control w-full ">
             <label className="label">
               <span className="label-text"> Name</span>
@@ -57,6 +96,35 @@ const Signup = () => {
             )}
           </div>
 
+          <div>
+            <p className="text-center text-xl mt-4">Sign up as a</p>
+            <div className="form-control">
+              <label className="label cursor-pointer">
+                <span className="label-text font-bold">Buyer</span>
+                <input
+                  type="radio"
+                  name="userRole"
+                  className="radio checked:bg-blue-500"
+                  checked
+                  value="buyer"
+                  {...register("userRole")}
+                />
+              </label>
+            </div>
+            <div className="form-control">
+              <label className="label cursor-pointer">
+                <span className="label-text font-bold">Seller</span>
+                <input
+                  type="radio"
+                  name="userRole"
+                  value="seller"
+                  className="radio checked:bg-blue-500"
+                  {...register("userRole")}
+                />
+              </label>
+            </div>
+          </div>
+
           <input
             className="btn mt-4 btn-primary bg-pink-600 w-full"
             type="submit"
@@ -69,7 +137,12 @@ const Signup = () => {
           </Link>
         </p>
         <div className="divider">OR</div>
-        <button className="btn btn-outline w-full">CONTINUE WITH GOOGLE</button>
+        <button
+          onClick={handleGoogleLogin}
+          className="btn btn-outline w-full bg-pink-600 text-white"
+        >
+          CONTINUE WITH GOOGLE
+        </button>
       </div>
     </div>
   );
