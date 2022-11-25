@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 
 import logo from "../../Assets/logo/logo.png";
+import { AuthContext } from "../../Contexts/AuthProvider/AuthProvider";
 
 const Navbar = () => {
+  const user = useContext(AuthContext);
   const menuItem = (
     <>
       <li className="font-semibold mr-2">
@@ -52,7 +54,25 @@ const Navbar = () => {
       </div>
       <div className="navbar-end ">
         <div className="font-semibold">
-          {/* this section will be add after login */}
+          {user?.email ? (
+            <div className="flex">
+              <li className="list-none mr-2">
+                <Link to="/myreviews">My reviews</Link>
+              </li>
+              <li className="list-none mr-2">
+                <Link to="/login">Add Services</Link>
+              </li>
+              <li className="list-none mr-2">
+                <button>Log Out</button>
+              </li>
+            </div>
+          ) : (
+            <>
+              <li className="list-none mr-2">
+                <Link to="/login">Login</Link>
+              </li>
+            </>
+          )}
         </div>
       </div>
     </div>
