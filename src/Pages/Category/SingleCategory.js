@@ -1,5 +1,6 @@
 import React from "react";
 import { useLoaderData } from "react-router-dom";
+import Book from "../Book/Book";
 
 const SingleCategory = () => {
   const { categori, products } = useLoaderData();
@@ -9,7 +10,9 @@ const SingleCategory = () => {
       <h2 className="text-3xl text-center">
         Available <strong>{categori}</strong> books
       </h2>
-      <h4>{products.length}</h4>
+      {products.map((book, i) => (
+        <Book key={i} book={book}></Book>
+      ))}
     </div>
   );
 };
