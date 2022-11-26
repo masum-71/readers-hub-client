@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useContext } from "react";
 import { Link, Outlet } from "react-router-dom";
 import { AuthContext } from "../../Contexts/AuthProvider/AuthProvider";
+import useAdmin from "../../Hooks/useAdmin";
 import useBuyer from "../../Hooks/useBuyer";
 import useSeller from "../../Hooks/useSellet";
 import Navbar from "../../Shared/Navbar/Navbar";
@@ -26,6 +27,7 @@ const DashboardLayout = () => {
   const { user } = useContext(AuthContext);
   const [isBuyer] = useBuyer(user?.email);
   const [isSeller] = useSeller(user?.email);
+  const [isAdmin] = useAdmin(user?.email);
 
   return (
     <div>
@@ -60,6 +62,19 @@ const DashboardLayout = () => {
                 </li>
                 <li>
                   <Link>My Products</Link>
+                </li>
+              </>
+            )}
+            {isAdmin && (
+              <>
+                <li>
+                  <Link>All Sellers</Link>
+                </li>
+                <li>
+                  <Link>All Buyers</Link>
+                </li>
+                <li>
+                  <Link>Reported Item</Link>
                 </li>
               </>
             )}
