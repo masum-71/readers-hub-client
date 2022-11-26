@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Contexts/AuthProvider/AuthProvider";
 
 const Login = () => {
@@ -18,7 +18,7 @@ const Login = () => {
     loginUser(data.email, data.password)
       .then((result) => {
         const user = result.user;
-        console.log(user);
+
         navigate(from, { replace: true });
       })
       .catch((err) => {
