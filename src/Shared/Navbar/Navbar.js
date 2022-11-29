@@ -3,9 +3,13 @@ import { Link } from "react-router-dom";
 
 import logo from "../../Assets/logo/logo.png";
 import { AuthContext } from "../../Contexts/AuthProvider/AuthProvider";
+import useBuyer from "../../Hooks/useBuyer";
+import useSeller from "../../Hooks/useSellet";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
+  const [isSeller] = useSeller(user?.email);
+  const [isBuyer] = useBuyer(user?.email);
   const menuItem = (
     <>
       <li className="font-semibold mr-2">
@@ -62,7 +66,17 @@ const Navbar = () => {
           {user?.email ? (
             <div className="flex items-center">
               <li className="list-none mr-2">
-                <Link to="/dashboard">Dashboard</Link>
+                <Link
+                  to={`${
+                    isSeller
+                      ? "/dashboard/addproduct"
+                      : isBuyer
+                      ? "/dashboard/myorders"
+                      : "/dashboard/allseller"
+                  }`}
+                >
+                  Dashboard
+                </Link>
               </li>
               <li className="list-none mr-2">
                 <button onClick={userLogOut} className="btn btn-sm bg-pink-600">

@@ -17,8 +17,11 @@ const HomeCategories = () => {
         Our Book Collection
       </h3>
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-        {categories.map((category) => (
-          <Category key={category._id} category={category}></Category>
+        {categories.map((singleCategory) => (
+          <Category
+            key={singleCategory._id}
+            singleCategory={singleCategory}
+          ></Category>
         ))}
       </div>
     </div>

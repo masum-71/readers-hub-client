@@ -5,6 +5,7 @@ import { AuthContext } from "../../Contexts/AuthProvider/AuthProvider";
 import useAdmin from "../../Hooks/useAdmin";
 import useBuyer from "../../Hooks/useBuyer";
 import useSeller from "../../Hooks/useSellet";
+import Footer from "../../Shared/Footer/Footer";
 import Navbar from "../../Shared/Navbar/Navbar";
 
 const DashboardLayout = () => {
@@ -58,20 +59,20 @@ const DashboardLayout = () => {
             {isSeller && (
               <>
                 <li>
-                  <Link>Add Products</Link>
+                  <Link to="/dashboard/addproduct">Add Products</Link>
                 </li>
                 <li>
-                  <Link>My Products</Link>
+                  <Link to="/dashboard/myproduct">My Products</Link>
                 </li>
               </>
             )}
             {isAdmin && (
               <>
                 <li>
-                  <Link>All Sellers</Link>
+                  <Link to="/dashboard/allseller">All Sellers</Link>
                 </li>
                 <li>
-                  <Link>All Buyers</Link>
+                  <Link to="/dashboard/allbuyer">All Buyers</Link>
                 </li>
                 <li>
                   <Link>Reported Item</Link>
@@ -81,6 +82,7 @@ const DashboardLayout = () => {
           </ul>
         </div>
       </div>
+      <Footer></Footer>
     </div>
   );
 };
