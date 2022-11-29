@@ -16,6 +16,9 @@ const AddProduct = () => {
     formState: { errors },
   } = useForm();
 
+  const time = new Date().toLocaleString();
+  console.log(time);
+
   const handleAddProduct = (data) => {
     const image = data.image[0];
     const formData = new FormData();
@@ -39,6 +42,7 @@ const AddProduct = () => {
           location: data.location,
           condition: data.condition,
           photo: imgData.data.url,
+          time: time,
         };
 
         fetch(`http://localhost:5000/categories`, {
