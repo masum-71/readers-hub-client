@@ -5,7 +5,7 @@ import { AuthContext } from "../../Contexts/AuthProvider/AuthProvider";
 
 const BookModal = ({ product, setProduct }) => {
   const { user } = useContext(AuthContext);
-  const { name, price } = product;
+  const { name, price, photo } = product;
 
   const { data, isLoading, refetch } = useQuery({
     queryKey: ["user"],
@@ -36,6 +36,7 @@ const BookModal = ({ product, setProduct }) => {
       price,
       phone,
       location,
+      photo,
     };
 
     fetch("http://localhost:5000/bookings", {
@@ -57,7 +58,6 @@ const BookModal = ({ product, setProduct }) => {
       });
   };
 
-  console.log(data.name);
   return (
     <div>
       <input type="checkbox" id="bookingModal" className="modal-toggle" />
