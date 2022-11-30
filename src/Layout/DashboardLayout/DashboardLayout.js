@@ -40,13 +40,13 @@ const DashboardLayout = () => {
           className="drawer-toggle"
         />
         <div className="drawer-content ">
-          <Outlet></Outlet>
           <label
             htmlFor="dashboard-drawer"
             className="btn btn-sm bg-pink-600 drawer-button lg:hidden"
           >
             Open drawer
           </label>
+          <Outlet></Outlet>
         </div>
         <div className="drawer-side">
           <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>

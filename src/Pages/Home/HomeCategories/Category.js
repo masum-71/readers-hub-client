@@ -11,13 +11,15 @@ const Category = ({ singleCategory }) => {
         </figure>
         <div className="card-body">
           <h2 className="card-title">{category}</h2>
-          <p>If a dog chews shoes whose shoes does he choose?</p>
+          <p className="mb-3">
+            Buy your favorite <strong>{category}</strong> Book from us
+          </p>
           <div className="card-actions justify-end">
             <Link
               to={`category/${_id}`}
               className="btn btn-primary bg-pink-600"
             >
-              Buy Now
+              Explore More
             </Link>
           </div>
         </div>

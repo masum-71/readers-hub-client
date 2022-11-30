@@ -17,7 +17,6 @@ const AddProduct = () => {
   } = useForm();
 
   const time = new Date().toLocaleString();
-  console.log(time);
 
   const handleAddProduct = (data) => {
     const image = data.image[0];
@@ -43,6 +42,7 @@ const AddProduct = () => {
           condition: data.condition,
           photo: imgData.data.url,
           time: time,
+          OriginalPrice: data.OriginalPrice,
         };
 
         fetch(`http://localhost:5000/categories`, {
@@ -54,7 +54,6 @@ const AddProduct = () => {
         })
           .then((res) => res.json())
           .then((result) => {
-            console.log(result);
             if (result.modifiedCount > 0) {
               toast.success(`${data.name} is added successfully`);
               navigate("/dashboard/myproduct");
@@ -68,6 +67,18 @@ const AddProduct = () => {
       <h4 className="text-3xl text-center mb-10">Add Product</h4>
       <div className="w-96 m-auto border-4 bg-slate-100 p-6">
         <form onSubmit={handleSubmit(handleAddProduct)}>
+          <div className="form-control w-full ">
+            <label className="label">
+              <span className="label-text"> Email</span>
+            </label>
+            <input
+              type="email"
+              defaultValue={user?.email}
+              readOnly
+              className="input input-bordered w-full "
+              {...register("email", { required: "email is required" })}
+            />
+          </div>
           <div className="form-control w-full ">
             <label className="label">
               <span className="label-text">Category</span>
@@ -98,24 +109,33 @@ const AddProduct = () => {
           </div>
           <div className="form-control w-full ">
             <label className="label">
-              <span className="label-text"> Email</span>
+              <span className="label-text">Author</span>
             </label>
             <input
-              type="email"
-              defaultValue={user?.email}
-              readOnly
+              type="text"
               className="input input-bordered w-full "
-              {...register("email", { required: "email is required" })}
+              {...register("description", { required: true })}
             />
           </div>
+
           <div className="form-control w-full ">
             <label className="label">
-              <span className="label-text">Price</span>
+              <span className="label-text">Resale Price</span>
             </label>
             <input
               type="number"
               className="input input-bordered w-full "
               {...register("price", { required: true })}
+            />
+          </div>
+          <div className="form-control w-full ">
+            <label className="label">
+              <span className="label-text">Original Price</span>
+            </label>
+            <input
+              type="number"
+              className="input input-bordered w-full "
+              {...register("OriginalPrice", { required: true })}
             />
           </div>
           <div className="form-control w-full ">
@@ -128,16 +148,7 @@ const AddProduct = () => {
               {...register("mobile", { required: true })}
             />
           </div>
-          <div className="form-control w-full ">
-            <label className="label">
-              <span className="label-text">Description</span>
-            </label>
-            <input
-              type="text"
-              className="input input-bordered w-full "
-              {...register("description", { required: true })}
-            />
-          </div>
+
           <div className="form-control w-full ">
             <label className="label">
               <span className="label-text">Year of purchase</span>
@@ -190,7 +201,10 @@ const AddProduct = () => {
             )}
           </div>
 
-          <input className="btn mt-4 btn-accent w-full" type="submit" />
+          <input
+            className="btn mt-4 btn-primary bg-pink-600 w-full"
+            type="submit"
+          />
         </form>
       </div>
     </div>
