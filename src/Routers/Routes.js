@@ -2,17 +2,20 @@ import { createBrowserRouter } from "react-router-dom";
 import AddProduct from "../Dashboard/AddProduct/AddProduct";
 import AllBuyers from "../Dashboard/AllBuyers/AllBuyers";
 import AllSeller from "../Dashboard/AllSeller/AllSeller";
-import Dashboard from "../Dashboard/Dashboard/Dashboard";
+
 import MyOrders from "../Dashboard/MyOrders/Myorders";
 import MyProducts from "../Dashboard/MyProducts/MyProducts";
+import Report from "../Dashboard/Repoet/Report";
 import DashboardLayout from "../Layout/DashboardLayout/DashboardLayout";
 import Main from "../Layout/Main/Main";
 import SingleCategory from "../Pages/Category/SingleCategory";
 import Home from "../Pages/Home/Home";
 import Login from "../Pages/Login/Login";
 import Signup from "../Pages/Signup/Signup";
+
 import NotFound from "./NotFound";
 import PrivateRoute from "./PrivateRoute/PrivateRoute";
+import SellerRoute from "./SellerRoute/SellerRoute";
 
 export const router = createBrowserRouter([
   {
@@ -54,7 +57,11 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/dashboard/addproduct",
-        element: <AddProduct></AddProduct>,
+        element: (
+          <SellerRoute>
+            <AddProduct></AddProduct>
+          </SellerRoute>
+        ),
       },
       {
         path: "/dashboard/myproduct",
@@ -71,6 +78,10 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/allbuyer",
         element: <AllBuyers></AllBuyers>,
+      },
+      {
+        path: "/dashboard/report",
+        element: <Report></Report>,
       },
     ],
   },

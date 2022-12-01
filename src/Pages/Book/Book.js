@@ -1,4 +1,5 @@
 import React from "react";
+import toast from "react-hot-toast";
 
 const Book = ({ book, setProduct }) => {
   const {
@@ -11,7 +12,35 @@ const Book = ({ book, setProduct }) => {
     OriginalPrice,
     photo,
     time,
+    email,
   } = book;
+
+  const handleReport = (event) => {
+    event.preventDefault();
+
+    const report = {
+      name,
+      email,
+      price,
+      description,
+    };
+
+    fetch("http://localhost:5000/report", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(report),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.acknowledged) {
+          toast.success(`Your report is successfully done`);
+        } else {
+          toast.error(`${data.message}`);
+        }
+      });
+  };
 
   return (
     <div className="card bg-base-100 shadow-xl">
@@ -39,7 +68,12 @@ const Book = ({ book, setProduct }) => {
           >
             Book now
           </label>
-          <button className="btn btn-primary btn-xs bg-pink-600">Report</button>
+          <button
+            onClick={() => handleReport(book)}
+            className="btn btn-primary btn-xs bg-pink-600"
+          >
+            Report
+          </button>
         </div>
       </div>
       {/* <BookModal book={book}></BookModal> */}

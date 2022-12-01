@@ -19,9 +19,17 @@ const MyProducts = () => {
   console.log(products);
   return (
     <div className="grid lg:grid-cols-2 gap-4">
-      {products.map((product, i) => (
-        <MyProduct key={i} product={product}></MyProduct>
-      ))}
+      {products.length < 1 ? (
+        <>
+          <p className="text-center font-bold text-2xl">
+            You do not add any product yet
+          </p>
+        </>
+      ) : (
+        products.map((product, i) => (
+          <MyProduct key={i} product={product}></MyProduct>
+        ))
+      )}
     </div>
   );
 };

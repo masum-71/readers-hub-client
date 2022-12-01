@@ -1,4 +1,3 @@
-import { useQuery } from "@tanstack/react-query";
 import React, { useContext } from "react";
 import { Link, Outlet } from "react-router-dom";
 import { AuthContext } from "../../Contexts/AuthProvider/AuthProvider";
@@ -75,7 +74,7 @@ const DashboardLayout = () => {
                   <Link to="/dashboard/allbuyer">All Buyers</Link>
                 </li>
                 <li>
-                  <Link>Reported Item</Link>
+                  <Link to="/dashboard/report">Reported Item</Link>
                 </li>
               </>
             )}
