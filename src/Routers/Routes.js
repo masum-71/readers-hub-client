@@ -8,6 +8,7 @@ import MyProducts from "../Dashboard/MyProducts/MyProducts";
 import Report from "../Dashboard/Repoet/Report";
 import DashboardLayout from "../Layout/DashboardLayout/DashboardLayout";
 import Main from "../Layout/Main/Main";
+import Blog from "../Pages/Blog/Blog";
 import SingleCategory from "../Pages/Category/SingleCategory";
 import Home from "../Pages/Home/Home";
 import Login from "../Pages/Login/Login";
@@ -44,6 +45,10 @@ export const router = createBrowserRouter([
       {
         path: "/signup",
         element: <Signup></Signup>,
+      },
+      {
+        path: "/blog",
+        element: <Blog></Blog>,
       },
     ],
   },
